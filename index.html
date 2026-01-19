@@ -3,402 +3,542 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Game Bola Ramalan - File Index</title>
+    <title>Game Kuis Bola Ramalan</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background-color: #1a1a2e;
             color: white;
-            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             margin: 0;
+            overflow: hidden;
         }
-        
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        
-        h1 {
-            color: #4cc9f0;
+
+        /* Container Utama */
+        .game-area {
             text-align: center;
-            text-shadow: 0 0 20px rgba(76, 201, 240, 0.5);
-            margin-bottom: 10px;
-        }
-        
-        .subtitle {
-            text-align: center;
-            color: #888;
-            margin-bottom: 40px;
-        }
-        
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(76, 201, 240, 0.3);
-            border-radius: 10px;
+            position: relative;
+            width: 100%;
+            max-width: 600px;
             padding: 20px;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
         }
-        
-        .card:hover {
-            border-color: #4cc9f0;
-            box-shadow: 0 0 20px rgba(76, 201, 240, 0.3);
-            transform: translateY(-5px);
+
+        /* --- Style Bola Ramalan --- */
+        .crystal-ball-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
         }
-        
-        .card h2 {
-            color: #4cc9f0;
-            margin-top: 0;
-            font-size: 1.3em;
-        }
-        
-        .card p {
-            color: #ccc;
-            font-size: 0.95em;
-            line-height: 1.6;
-            margin: 10px 0;
-        }
-        
-        .card-icon {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
-        a {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 10px 20px;
-            background: #4cc9f0;
-            color: #1a1a2e;
-            text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        a:hover {
-            background: #00d4ff;
+
+        .crystal-ball-container:hover {
             transform: scale(1.05);
         }
-        
-        .status-card {
-            background: rgba(46, 196, 182, 0.2);
-            border: 1px solid #2ec4b6;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-        }
-        
-        .status-title {
-            color: #2ec4b6;
-            font-weight: bold;
-            font-size: 1.1em;
-        }
-        
-        .checklist {
-            list-style: none;
-            padding: 0;
-            margin: 15px 0 0 0;
-        }
-        
-        .checklist li {
-            padding: 8px 0;
-            padding-left: 25px;
+
+        .crystal-ball {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #aaddff, #3a0ca3, #000);
+            box-shadow: 0 0 30px #4cc9f0, inset 0 0 20px rgba(255,255,255,0.5);
             position: relative;
+            animation: float 3s ease-in-out infinite;
         }
-        
-        .checklist li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #2ec4b6;
-            font-weight: bold;
+
+        .base {
+            width: 80px;
+            height: 20px;
+            background: #444;
+            border-radius: 50%;
+            margin: -10px auto 0;
+            box-shadow: 0 10px 10px black;
         }
-        
-        .quick-start {
-            background: rgba(76, 201, 240, 0.15);
-            border-left: 4px solid #4cc9f0;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 5px;
-        }
-        
-        .quick-start h3 {
+
+        .instruction {
             color: #4cc9f0;
-            margin-top: 0;
-        }
-        
-        .quick-start ol {
-            padding-left: 20px;
-        }
-        
-        .quick-start li {
-            margin-bottom: 10px;
-            color: #ddd;
-        }
-        
-        .category {
-            margin-bottom: 40px;
-        }
-        
-        .category-title {
-            color: #4cc9f0;
-            font-size: 1.5em;
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #4cc9f0;
+            font-size: 1.1em;
+            text-shadow: 0 0 5px #4cc9f0;
         }
-        
-        code {
+
+        /* --- Area Pertanyaan (Kartu) --- */
+        .question-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            display: none; /* Hidden by default */
+        }
+
+        .question-card.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .timer-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #333;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .timer-fill {
+            height: 100%;
+            background-color: #f72585;
+            width: 100%;
+            transition: width 1s linear;
+        }
+
+        h2 {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            line-height: 1.4;
+        }
+
+        .options-grid {
+            display: grid;
+            gap: 10px;
+            text-align: left;
+        }
+
+        .option {
             background: rgba(0, 0, 0, 0.3);
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-family: 'Courier New', monospace;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            transition: all 0.3s;
         }
-        
-        .badge {
-            display: inline-block;
-            background: #f72585;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-size: 0.8em;
-            margin-left: 10px;
+
+        .option:hover:not(.correct):not(.wrong) {
+            background: rgba(76, 201, 240, 0.2);
+            border-color: #4cc9f0;
+        }
+
+        /* --- Kelas State Jawaban --- */
+        .option.correct {
+            background-color: #2ec4b6; /* Green */
+            color: #000;
+            font-weight: bold;
+            border-color: #fff;
+            box-shadow: 0 0 15px #2ec4b6;
+        }
+
+        .option.wrong {
+            opacity: 0.5;
+            background-color: #f72585;
+            color: #fff;
+        }
+
+        .status-text {
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.2em;
+            min-height: 1.5em;
+        }
+
+        /* Score Display */
+        .score-display {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid #4cc9f0;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            box-shadow: 0 0 10px rgba(76, 201, 240, 0.3);
+        }
+
+        .score-display span {
+            color: #4cc9f0;
             font-weight: bold;
         }
-        
-        .badge.new {
-            background: #2ec4b6;
+
+        /* Animasi */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        .shaking {
+            animation: shake 0.5s;
         }
         
-        .footer {
-            text-align: center;
-            color: #666;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(76, 201, 240, 0.2);
+        /* Disable clicks when active */
+        .disabled {
+            pointer-events: none;
+            filter: grayscale(0.8);
         }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h1>🎮 Game Kuis Bola Ramalan</h1>
-    <p class="subtitle">Versi 1.1 - Dengan Audio Effects Support</p>
+<div class="game-area">
+    <div class="score-display">Benar: <span id="scoreCorrect">0</span> | Salah: <span id="scoreWrong">0</span></div>
     
-    <div class="status-card">
-        <div class="status-title">✅ Status Sistem</div>
-        <ul class="checklist">
-            <li>Game utama sudah lengkap dengan audio effects</li>
-            <li>17 pertanyaan tentang protein & olahraga</li>
-            <li>Timer 5 detik per pertanyaan</li>
-            <li>Score tracking real-time</li>
-            <li>Audio feedback untuk jawaban benar & salah</li>
-        </ul>
+    <div class="crystal-ball-container" id="ballBtn" onclick="startGame()">
+        <div class="crystal-ball"></div>
+        <div class="base"></div>
     </div>
-    
-    <div class="quick-start">
-        <h3>⚡ Quick Start (5 Menit)</h3>
-        <ol>
-            <li><strong>Setup Audio:</strong> Buka <code>audio_test_generator.html</code></li>
-            <li><strong>Generate:</strong> Klik "Generate & Download All Audio Files"</li>
-            <li><strong>Letakkan Files:</strong> <code>sound_correct.wav</code> & <code>sound_wrong.wav</code> di folder <code>/Users/dkaa/</code></li>
-            <li><strong>Main Game:</strong> Buka <code>crystal_ball_game.html</code> di browser</li>
-            <li><strong>Enjoy:</strong> Klik bola ramalan dan mainkan! 🎉</li>
-        </ol>
-    </div>
-    
-    <!-- GAME FILES -->
-    <div class="category">
-        <h2 class="category-title">🎯 Game Files (MAIN)</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="card-icon">🎮</div>
-                <h2>crystal_ball_game.html</h2>
-                <p>Game utama dengan sistem kuis bola ramalan. Dilengkapi dengan:</p>
-                <ul style="font-size: 0.9em; margin: 10px 0; padding-left: 20px; color: #aaa;">
-                    <li>Bola ramalan interaktif</li>
-                    <li>17 pertanyaan random</li>
-                    <li>Timer 5 detik</li>
-                    <li>Audio effects terintegrasi</li>
-                    <li>Score tracking</li>
-                </ul>
-                <a href="crystal_ball_game.html">▶️ Buka Game</a>
-            </div>
-            
-            <div class="card">
-                <div class="card-icon">🔊</div>
-                <h2>audio_test_generator.html <span class="badge new">NEW</span></h2>
-                <p>Tool untuk test & generate audio files secara online. Fitur:</p>
-                <ul style="font-size: 0.9em; margin: 10px 0; padding-left: 20px; color: #aaa;">
-                    <li>Generate tone untuk benar & salah</li>
-                    <li>Download langsung sebagai WAV</li>
-                    <li>Test audio yang sudah ada</li>
-                    <li>Custom frequency & duration</li>
-                </ul>
-                <a href="audio_test_generator.html">🔨 Setup Audio</a>
-            </div>
+
+    <div class="instruction" id="instructionText">Klik Bola Ramalan untuk mendapat pertanyaan!</div>
+
+    <!-- Audio Elements -->
+    <audio id="soundBallClick" preload="auto">
+        <source src="sound_ball_click.mp3" type="audio/mpeg">
+        <source src="sound_ball_click.wav" type="audio/wav">
+    </audio>
+    <audio id="soundCorrect" preload="auto">
+        <source src="sound_correct.mp3" type="audio/mpeg">
+        <source src="sound_correct.wav" type="audio/wav">
+    </audio>
+    <audio id="soundWrong" preload="auto">
+        <source src="sound_wrong.mp3" type="audio/mpeg">
+        <source src="sound_wrong.wav" type="audio/wav">
+    </audio>
+
+    <div class="question-card" id="questionCard">
+        <div class="timer-bar">
+            <div class="timer-fill" id="timerFill"></div>
         </div>
-    </div>
-    
-    <!-- DOCUMENTATION FILES -->
-    <div class="category">
-        <h2 class="category-title">📚 Dokumentasi</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="card-icon">⚙️</div>
-                <h2>SETUP_SUMMARY.txt</h2>
-                <p>Ringkasan lengkap setup audio dan file yang perlu disiapkan.</p>
-                <p><strong>Cocok untuk:</strong> Quick reference saat setup</p>
-                <p><code>3 opsi cara setup audio (paling mudah)</code></p>
-                <a href="SETUP_SUMMARY.txt">📖 Baca File</a>
-            </div>
-            
-            <div class="card">
-                <div class="card-icon">🔧</div>
-                <h2>AUDIO_SETUP.txt</h2>
-                <p>Panduan lengkap setup file audio dengan 4 opsi berbeda.</p>
-                <p><strong>Cocok untuk:</strong> Pemula yang ingin tahu semua opsi</p>
-                <p><code>Zapsplat, Audacity, Python, Online Generator</code></p>
-                <a href="AUDIO_SETUP.txt">📖 Baca File</a>
-            </div>
-            
-            <div class="card">
-                <div class="card-icon">📖</div>
-                <h2>README.md</h2>
-                <p>Dokumentasi komprehensif tentang audio features dan cara kerjanya.</p>
-                <p><strong>Cocok untuk:</strong> Developer yang ingin understand code</p>
-                <p><code>Audio specs, customization, troubleshooting</code></p>
-                <a href="README.md">📖 Baca File</a>
-            </div>
-            
-            <div class="card">
-                <div class="card-icon">🔀</div>
-                <h2>AUDIO_FLOW_DIAGRAM.txt</h2>
-                <p>Diagram alur audio saat game berlangsung.</p>
-                <p><strong>Cocok untuk:</strong> Visual learners</p>
-                <p><code>Flow charts, timing diagrams, error handling</code></p>
-                <a href="AUDIO_FLOW_DIAGRAM.txt">📖 Baca File</a>
-            </div>
+        <h2 id="questionText">Pertanyaan akan muncul di sini...</h2>
+        <div class="options-grid" id="optionsContainer">
         </div>
-    </div>
-    
-    <!-- REFERENCE FILES -->
-    <div class="category">
-        <h2 class="category-title">🛠️ Reference & Helper Files</h2>
-        <div class="grid">
-            <div class="card">
-                <div class="card-icon">🐍</div>
-                <h2>generate_audio.js</h2>
-                <p>Reference script untuk generate audio menggunakan Python.</p>
-                <p><strong>Cocok untuk:</strong> Advanced users dengan Python installed</p>
-                <p><code>Dapat dimodifikasi untuk kebutuhan spesifik</code></p>
-                <a href="generate_audio.js">📖 Lihat Code</a>
-            </div>
-        </div>
-    </div>
-    
-    <!-- SETUP CHECKLIST -->
-    <div class="status-card" style="background: rgba(46, 196, 182, 0.1); border-color: #2ec4b6;">
-        <div class="status-title">✓ Setup Checklist</div>
-        <ul class="checklist">
-            <li>HTML file: <code>crystal_ball_game.html</code> ✓ Ready</li>
-            <li>Audio tool: <code>audio_test_generator.html</code> ✓ Ready</li>
-            <li>Audio file: <code>sound_correct.wav</code> ○ Need to generate/download</li>
-            <li>Audio file: <code>sound_wrong.wav</code> ○ Need to generate/download</li>
-            <li>All files in: <code>/Users/dkaa/</code> ○ Verify location</li>
-            <li>Test audio playback ○ After setup</li>
-        </ul>
-    </div>
-    
-    <!-- NEXT STEPS -->
-    <div class="quick-start" style="background: rgba(247, 37, 133, 0.1); border-left-color: #f72585;">
-        <h3 style="color: #f72585;">🎯 Next Steps</h3>
-        <ol>
-            <li><strong style="color: #ff9ff3;">Jangan lupa buka <code>audio_test_generator.html</code></strong> untuk setup audio</li>
-            <li>Generate atau download file audio <code>sound_correct.wav</code> & <code>sound_wrong.wav</code></li>
-            <li>Letakkan kedua file audio di folder <code>/Users/dkaa/</code></li>
-            <li>Buka <code>crystal_ball_game.html</code> di browser</li>
-            <li>Klik bola ramalan dan mulai bermain! 🎮</li>
-        </ol>
-    </div>
-    
-    <!-- FILE STRUCTURE -->
-    <div class="category">
-        <h2 class="category-title">📂 Struktur Folder</h2>
-        <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; font-family: monospace; font-size: 0.9em; overflow-x: auto;">
-            <div>/Users/dkaa/</div>
-            <div style="margin-left: 20px;">
-                <div>├── <span style="color: #4cc9f0;">crystal_ball_game.html</span> ← Game</div>
-                <div>├── <span style="color: #4cc9f0;">audio_test_generator.html</span> ← Audio Setup Tool</div>
-                <div>├── <span style="color: #2ec4b6;">sound_correct.wav</span> ← Audio untuk jawaban benar</div>
-                <div>├── <span style="color: #2ec4b6;">sound_wrong.wav</span> ← Audio untuk jawaban salah</div>
-                <div>├── README.md ← Dokumentasi lengkap</div>
-                <div>├── SETUP_SUMMARY.txt ← Quick reference</div>
-                <div>├── AUDIO_SETUP.txt ← Panduan audio</div>
-                <div>├── AUDIO_FLOW_DIAGRAM.txt ← Flow charts</div>
-                <div>├── generate_audio.js ← Python script reference</div>
-                <div>└── index.html ← File ini (navigasi)</div>
-            </div>
-        </div>
-    </div>
-    
-    <!-- FEATURES -->
-    <div class="category">
-        <h2 class="category-title">✨ Fitur Utama Game</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
-            <div style="background: rgba(76, 201, 240, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #4cc9f0;">
-                <h4 style="color: #4cc9f0; margin-top: 0;">🎯 Sistem Pertanyaan</h4>
-                <p style="font-size: 0.9em; margin: 0;">17 pertanyaan tentang protein & olahraga. Dipilih secara random setiap kali main.</p>
-            </div>
-            
-            <div style="background: rgba(76, 201, 240, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #4cc9f0;">
-                <h4 style="color: #4cc9f0; margin-top: 0;">⏱️ Timer 5 Detik</h4>
-                <p style="font-size: 0.9em; margin: 0;">Setiap pertanyaan memiliki waktu menjawab 5 detik dengan progress bar visual.</p>
-            </div>
-            
-            <div style="background: rgba(46, 196, 182, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #2ec4b6;">
-                <h4 style="color: #2ec4b6; margin-top: 0;">🔊 Audio Feedback</h4>
-                <p style="font-size: 0.9em; margin: 0;">Suara feedback saat jawaban benar (tinggi) dan salah (rendah).</p>
-            </div>
-            
-            <div style="background: rgba(46, 196, 182, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #2ec4b6;">
-                <h4 style="color: #2ec4b6; margin-top: 0;">📊 Score Tracking</h4>
-                <p style="font-size: 0.9em; margin: 0;">Track real-time jumlah jawaban benar dan salah selama bermain.</p>
-            </div>
-            
-            <div style="background: rgba(247, 37, 133, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #f72585;">
-                <h4 style="color: #f72585; margin-top: 0;">🎮 Interaktif</h4>
-                <p style="font-size: 0.9em; margin: 0;">Klik bola ramalan untuk pertanyaan baru, klik opsi untuk menjawab.</p>
-            </div>
-            
-            <div style="background: rgba(247, 37, 133, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #f72585;">
-                <h4 style="color: #f72585; margin-top: 0;">🎨 Beautiful UI</h4>
-                <p style="font-size: 0.9em; margin: 0;">Dark theme futuristik dengan animasi smooth dan visual feedback yang jelas.</p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- INFO BOX -->
-    <div style="background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
-        <p style="margin: 0; color: #ffa500;">
-            <strong>💡 Tip:</strong> Jika Anda baru pertama kali setup, mulai dari 
-            <a href="audio_test_generator.html" style="color: #4cc9f0;">audio_test_generator.html</a> 
-            untuk setup audio dengan mudah!
-        </p>
-    </div>
-    
-    <div class="footer">
-        <p>Game Kuis Bola Ramalan v1.1</p>
-        <p>Dengan Audio Effects Support • January 19, 2026</p>
+        <div class="status-text" id="statusText"></div>
     </div>
 </div>
+
+<script>
+    // --- DATA PERTANYAAN PROTEIN & OLAHRAGA ---
+    const questions = [
+        // PERTANYAAN PROTEIN
+        {
+            q: "Apa fungsi utama protein bagi tubuh setelah latihan fisik?",
+            options: ["Memberi energi instan", "Memperbaiki jaringan otot", "Melumasi sendi", "Meningkatkan detak jantung"],
+            answer: 1,
+            category: "Protein"
+        },
+        {
+            q: "Zat apakah yang merupakan 'blok bangunan' terkecil penyusun protein?",
+            options: ["Glukosa", "Asam Lemak", "Asam Amino", "Glikogen"],
+            answer: 2,
+            category: "Protein"
+        },
+        {
+            q: "Manakah sumber protein 'lengkap' (mengandung semua asam amino esensial)?",
+            options: ["Telur", "Nasi Putih", "Minyak Zaitun", "Apel"],
+            answer: 0,
+            category: "Protein"
+        },
+        {
+            q: "Jenis protein suplemen apa yang paling cepat diserap tubuh?",
+            options: ["Casein", "Soy Protein", "Kolagen", "Whey Protein"],
+            answer: 3,
+            category: "Protein"
+        },
+        {
+            q: "Mengapa atlet sering mengonsumsi Casein sebelum tidur?",
+            options: ["Diserap perlahan sepanjang malam", "Energi instan", "Membakar lemak", "Agar tidak mimpi buruk"],
+            answer: 0,
+            category: "Protein"
+        },
+        {
+            q: "Apa istilah asam amino yang TIDAK bisa diproduksi tubuh?",
+            options: ["Non-Esensial", "Asam Amino Esensial", "Kondisional", "Laktat"],
+            answer: 1,
+            category: "Protein"
+        },
+        {
+            q: "Berapa gram protein yang direkomendasikan per kg berat badan untuk atlet kekuatan?",
+            options: ["0.8-1.0g", "1.2-2.0g", "3.0-4.0g", "0.3-0.5g"],
+            answer: 1,
+            category: "Protein"
+        },
+        {
+            q: "Sumber protein nabati mana yang memiliki kandungan protein tertinggi?",
+            options: ["Bayam", "Kacang Kedelai", "Beras Merah", "Brokoli"],
+            answer: 1,
+            category: "Protein"
+        },
+        {
+            q: "Berapa waktu optimal mengonsumsi protein setelah latihan?",
+            options: ["1-2 jam setelah", "30 menit - 1 jam setelah", "3 jam atau lebih", "Saat masih berolahraga"],
+            answer: 1,
+            category: "Protein"
+        },
+        // PERTANYAAN OLAHRAGA
+        {
+            q: "Berapa detak jantung maksimal yang disarankan saat berolahraga (usia 20 tahun)?",
+            options: ["100 bpm", "150-170 bpm", "200+ bpm", "80-90 bpm"],
+            answer: 1,
+            category: "Olahraga"
+        },
+        {
+            q: "Jenis olahraga mana yang paling efektif untuk membangun massa otot?",
+            options: ["Yoga", "Renang", "Latihan Beban (Resistance Training)", "Jalan Kaki"],
+            answer: 2,
+            category: "Olahraga"
+        },
+        {
+            q: "Berapa frekuensi latihan beban ideal untuk pemula per minggu?",
+            options: ["1 hari", "2-3 hari", "5-6 hari", "7 hari"],
+            answer: 1,
+            category: "Olahraga"
+        },
+        {
+            q: "Olahraga aerobik apa yang paling bagus untuk kesehatan jantung?",
+            options: ["Angkat Beban", "Lari/Jogging", "Yoga", "Pilates"],
+            answer: 1,
+            category: "Olahraga"
+        },
+        {
+            q: "Apa manfaat utama melakukan pemanasan sebelum berolahraga?",
+            options: ["Menambah keringat", "Meningkatkan suhu tubuh dan fleksibilitas", "Mengecilkan perut", "Meningkatkan berat badan otot"],
+            answer: 1,
+            category: "Olahraga"
+        },
+        {
+            q: "Berapa durasi minimal olahraga kardio per hari untuk kesehatan optimal?",
+            options: ["10 menit", "20 menit", "30 menit", "60 menit"],
+            answer: 2,
+            category: "Olahraga"
+        },
+        {
+            q: "Istirahat berapa lama antar set dalam latihan beban yang ideal?",
+            options: ["10-20 detik", "30-60 detik", "2-3 menit", "5+ menit"],
+            answer: 1,
+            category: "Olahraga"
+        },
+        {
+            q: "Mengapa penting melakukan pendinginan (cool down) setelah olahraga?",
+            options: ["Agar tidak kedinginan", "Mengurangi soreness dan menormalkan detak jantung", "Mempercepat pertumbuhan otot", "Menghemat energi"],
+            answer: 1,
+            category: "Olahraga"
+        }
+    ];
+
+    // --- VARIABEL STATE ---
+    let isGameRunning = false;
+    let timerInterval;
+    let currentTime = 5;
+    let currentQuestionIndex = null;
+    let scoreCorrect = 0;
+    let scoreWrong = 0;
+    let answered = false;
+
+    // --- ELEMENT DOM ---
+    const ballBtn = document.getElementById('ballBtn');
+    const instructionText = document.getElementById('instructionText');
+    const questionCard = document.getElementById('questionCard');
+    const questionText = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const timerFill = document.getElementById('timerFill');
+    const statusText = document.getElementById('statusText');
+    const scoreCorrectEl = document.getElementById('scoreCorrect');
+    const scoreWrongEl = document.getElementById('scoreWrong');
+    const soundBallClick = document.getElementById('soundBallClick');
+    const soundCorrect = document.getElementById('soundCorrect');
+    const soundWrong = document.getElementById('soundWrong');
+
+    // --- FUNGSI UTAMA ---
+
+    function startGame() {
+        // Mencegah klik ganda saat game sedang berjalan
+        if (isGameRunning) return;
+
+        // 1. Mainkan suara ball click
+        playSound(soundBallClick);
+
+        // 2. Reset UI & State
+        isGameRunning = true;
+        currentTime = 5;
+        ballBtn.classList.add('disabled'); // Matikan bola sementara
+        ballBtn.classList.remove('shaking'); // Hapus animasi lama
+        void ballBtn.offsetWidth; // Trigger reflow untuk reset animasi
+        ballBtn.classList.add('shaking'); // Tambah animasi shake
+        
+        instructionText.innerText = "Membaca pikiranmu...";
+        statusText.innerText = "";
+        
+        // Sembunyikan kartu dulu untuk efek reset
+        questionCard.classList.remove('active');
+
+        // 3. Pilih Pertanyaan Random
+        setTimeout(() => {
+            const randomIndex = Math.floor(Math.random() * questions.length);
+            loadQuestion(randomIndex);
+            
+            // Tampilkan Kartu
+            instructionText.innerText = "Cepat! Jawab dalam 5 detik!";
+            questionCard.classList.add('active');
+            
+            // Mulai Timer
+            startTimer();
+        }, 800); // Delay sedikit untuk efek "loading" bola ramalan
+    }
+
+    function loadQuestion(index) {
+        currentQuestionIndex = index;
+        const data = questions[index];
+        answered = false;
+        
+        questionText.innerText = data.q;
+        optionsContainer.innerHTML = ""; // Bersihkan opsi lama
+
+        data.options.forEach((opt, i) => {
+            const div = document.createElement('div');
+            div.className = 'option';
+            div.innerText = opt;
+            div.id = `opt-${i}`;
+            div.onclick = () => handleAnswer(i);
+            div.style.cursor = 'pointer';
+            optionsContainer.appendChild(div);
+        });
+        
+        // Reset bar timer visual
+        timerFill.style.width = "100%";
+        timerFill.style.backgroundColor = "#f72585";
+    }
+
+    function handleAnswer(selectedIndex) {
+        // Jika sudah dijawab atau belum selesai loading, abaikan
+        if (answered || isGameRunning === false) return;
+
+        answered = true;
+        clearInterval(timerInterval);
+
+        const correctIndex = questions[currentQuestionIndex].answer;
+        const isCorrect = selectedIndex === correctIndex;
+
+        // Update Score & Suara
+        if (isCorrect) {
+            scoreCorrect++;
+            statusText.innerText = "✓ Jawaban Benar!";
+            statusText.style.color = "#2ec4b6";
+            playSound(soundCorrect); // Mainkan suara benar
+        } else {
+            scoreWrong++;
+            statusText.innerText = "✗ Jawaban Salah!";
+            statusText.style.color = "#f72585";
+            playSound(soundWrong); // Mainkan suara salah
+        }
+
+        // Update Score Display
+        scoreCorrectEl.innerText = scoreCorrect;
+        scoreWrongEl.innerText = scoreWrong;
+
+        // Tampilkan semua opsi dengan warna
+        for (let i = 0; i < 4; i++) {
+            const el = document.getElementById(`opt-${i}`);
+            el.onclick = null; // Disable click
+            el.style.cursor = 'default';
+            
+            if (i === correctIndex) {
+                el.classList.add('correct');
+            } else if (i === selectedIndex && !isCorrect) {
+                el.classList.add('wrong');
+            }
+        }
+
+        instructionText.innerText = "Klik Bola Ramalan lagi untuk lanjut.";
+        ballBtn.classList.remove('disabled');
+        isGameRunning = false;
+    }
+
+    function startTimer() {
+        // Update setiap detik
+        timerInterval = setInterval(() => {
+            currentTime--;
+            
+            // Update Visual Bar (5 detik = 100%, 4 = 80%, dst)
+            const percentage = (currentTime / 5) * 100;
+            timerFill.style.width = `${percentage}%`;
+
+            if (currentTime <= 0) {
+                endRound(false); // false = waktu habis, tidak dijawab
+            }
+        }, 1000);
+    }
+
+    function endRound(timeExpired = true) {
+        if (answered) return; // Sudah dijawab, skip
+        
+        answered = true;
+        clearInterval(timerInterval);
+        
+        // 1. Tampilkan Jawaban Benar
+        const correctIndex = questions[currentQuestionIndex].answer;
+        
+        // Loop semua opsi untuk memberi warna
+        for (let i = 0; i < 4; i++) {
+            const el = document.getElementById(`opt-${i}`);
+            el.onclick = null; // Disable click
+            el.style.cursor = 'default';
+            
+            if (i === correctIndex) {
+                el.classList.add('correct');
+            } else {
+                el.classList.add('wrong');
+            }
+        }
+
+        // 2. Update Status & Score & Suara
+        statusText.innerText = timeExpired ? "⏰ Waktu Habis! Jawaban ditampilkan." : "";
+        statusText.style.color = "#ff6b6b";
+        scoreWrong++;
+        scoreWrongEl.innerText = scoreWrong;
+        playSound(soundWrong); // Mainkan suara salah saat waktu habis
+        
+        instructionText.innerText = "Klik Bola Ramalan lagi untuk lanjut.";
+
+        // 3. Aktifkan kembali Bola
+        ballBtn.classList.remove('disabled');
+        isGameRunning = false;
+    }
+
+    // --- FUNGSI PUTAR SUARA ---
+    function playSound(audioElement) {
+        // Reset audio ke awal
+        audioElement.currentTime = 0;
+        
+        // Mainkan dengan error handling
+        const playPromise = audioElement.play();
+        if (playPromise !== undefined) {
+            playPromise.catch(error => {
+                console.log("Audio playback failed:", error);
+            });
+        }
+    }
+</script>
 
 </body>
 </html>
