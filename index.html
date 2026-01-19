@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Bola Ramalan - File Index</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: #4cc9f0;
+            text-align: center;
+            text-shadow: 0 0 20px rgba(76, 201, 240, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 40px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(76, 201, 240, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            border-color: #4cc9f0;
+            box-shadow: 0 0 20px rgba(76, 201, 240, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .card h2 {
+            color: #4cc9f0;
+            margin-top: 0;
+            font-size: 1.3em;
+        }
+        
+        .card p {
+            color: #ccc;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+        
+        .card-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            background: #4cc9f0;
+            color: #1a1a2e;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            background: #00d4ff;
+            transform: scale(1.05);
+        }
+        
+        .status-card {
+            background: rgba(46, 196, 182, 0.2);
+            border: 1px solid #2ec4b6;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .status-title {
+            color: #2ec4b6;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 15px 0 0 0;
+        }
+        
+        .checklist li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .checklist li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #2ec4b6;
+            font-weight: bold;
+        }
+        
+        .quick-start {
+            background: rgba(76, 201, 240, 0.15);
+            border-left: 4px solid #4cc9f0;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 5px;
+        }
+        
+        .quick-start h3 {
+            color: #4cc9f0;
+            margin-top: 0;
+        }
+        
+        .quick-start ol {
+            padding-left: 20px;
+        }
+        
+        .quick-start li {
+            margin-bottom: 10px;
+            color: #ddd;
+        }
+        
+        .category {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            color: #4cc9f0;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #4cc9f0;
+        }
+        
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #f72585;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        
+        .badge.new {
+            background: #2ec4b6;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #666;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(76, 201, 240, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🎮 Game Kuis Bola Ramalan</h1>
+    <p class="subtitle">Versi 1.1 - Dengan Audio Effects Support</p>
+    
+    <div class="status-card">
+        <div class="status-title">✅ Status Sistem</div>
+        <ul class="checklist">
+            <li>Game utama sudah lengkap dengan audio effects</li>
+            <li>17 pertanyaan tentang protein & olahraga</li>
+            <li>Timer 5 detik per pertanyaan</li>
+            <li>Score tracking real-time</li>
+            <li>Audio feedback untuk jawaban benar & salah</li>
+        </ul>
+    </div>
+    
+    <div class="quick-start">
+        <h3>⚡ Quick Start (5 Menit)</h3>
+        <ol>
+            <li><strong>Setup Audio:</strong> Buka <code>audio_test_generator.html</code></li>
+            <li><strong>Generate:</strong> Klik "Generate & Download All Audio Files"</li>
+            <li><strong>Letakkan Files:</strong> <code>sound_correct.wav</code> & <code>sound_wrong.wav</code> di folder <code>/Users/dkaa/</code></li>
+            <li><strong>Main Game:</strong> Buka <code>crystal_ball_game.html</code> di browser</li>
+            <li><strong>Enjoy:</strong> Klik bola ramalan dan mainkan! 🎉</li>
+        </ol>
+    </div>
+    
+    <!-- GAME FILES -->
+    <div class="category">
+        <h2 class="category-title">🎯 Game Files (MAIN)</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon">🎮</div>
+                <h2>crystal_ball_game.html</h2>
+                <p>Game utama dengan sistem kuis bola ramalan. Dilengkapi dengan:</p>
+                <ul style="font-size: 0.9em; margin: 10px 0; padding-left: 20px; color: #aaa;">
+                    <li>Bola ramalan interaktif</li>
+                    <li>17 pertanyaan random</li>
+                    <li>Timer 5 detik</li>
+                    <li>Audio effects terintegrasi</li>
+                    <li>Score tracking</li>
+                </ul>
+                <a href="crystal_ball_game.html">▶️ Buka Game</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🔊</div>
+                <h2>audio_test_generator.html <span class="badge new">NEW</span></h2>
+                <p>Tool untuk test & generate audio files secara online. Fitur:</p>
+                <ul style="font-size: 0.9em; margin: 10px 0; padding-left: 20px; color: #aaa;">
+                    <li>Generate tone untuk benar & salah</li>
+                    <li>Download langsung sebagai WAV</li>
+                    <li>Test audio yang sudah ada</li>
+                    <li>Custom frequency & duration</li>
+                </ul>
+                <a href="audio_test_generator.html">🔨 Setup Audio</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- DOCUMENTATION FILES -->
+    <div class="category">
+        <h2 class="category-title">📚 Dokumentasi</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon">⚙️</div>
+                <h2>SETUP_SUMMARY.txt</h2>
+                <p>Ringkasan lengkap setup audio dan file yang perlu disiapkan.</p>
+                <p><strong>Cocok untuk:</strong> Quick reference saat setup</p>
+                <p><code>3 opsi cara setup audio (paling mudah)</code></p>
+                <a href="SETUP_SUMMARY.txt">📖 Baca File</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🔧</div>
+                <h2>AUDIO_SETUP.txt</h2>
+                <p>Panduan lengkap setup file audio dengan 4 opsi berbeda.</p>
+                <p><strong>Cocok untuk:</strong> Pemula yang ingin tahu semua opsi</p>
+                <p><code>Zapsplat, Audacity, Python, Online Generator</code></p>
+                <a href="AUDIO_SETUP.txt">📖 Baca File</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">📖</div>
+                <h2>README.md</h2>
+                <p>Dokumentasi komprehensif tentang audio features dan cara kerjanya.</p>
+                <p><strong>Cocok untuk:</strong> Developer yang ingin understand code</p>
+                <p><code>Audio specs, customization, troubleshooting</code></p>
+                <a href="README.md">📖 Baca File</a>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">🔀</div>
+                <h2>AUDIO_FLOW_DIAGRAM.txt</h2>
+                <p>Diagram alur audio saat game berlangsung.</p>
+                <p><strong>Cocok untuk:</strong> Visual learners</p>
+                <p><code>Flow charts, timing diagrams, error handling</code></p>
+                <a href="AUDIO_FLOW_DIAGRAM.txt">📖 Baca File</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- REFERENCE FILES -->
+    <div class="category">
+        <h2 class="category-title">🛠️ Reference & Helper Files</h2>
+        <div class="grid">
+            <div class="card">
+                <div class="card-icon">🐍</div>
+                <h2>generate_audio.js</h2>
+                <p>Reference script untuk generate audio menggunakan Python.</p>
+                <p><strong>Cocok untuk:</strong> Advanced users dengan Python installed</p>
+                <p><code>Dapat dimodifikasi untuk kebutuhan spesifik</code></p>
+                <a href="generate_audio.js">📖 Lihat Code</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- SETUP CHECKLIST -->
+    <div class="status-card" style="background: rgba(46, 196, 182, 0.1); border-color: #2ec4b6;">
+        <div class="status-title">✓ Setup Checklist</div>
+        <ul class="checklist">
+            <li>HTML file: <code>crystal_ball_game.html</code> ✓ Ready</li>
+            <li>Audio tool: <code>audio_test_generator.html</code> ✓ Ready</li>
+            <li>Audio file: <code>sound_correct.wav</code> ○ Need to generate/download</li>
+            <li>Audio file: <code>sound_wrong.wav</code> ○ Need to generate/download</li>
+            <li>All files in: <code>/Users/dkaa/</code> ○ Verify location</li>
+            <li>Test audio playback ○ After setup</li>
+        </ul>
+    </div>
+    
+    <!-- NEXT STEPS -->
+    <div class="quick-start" style="background: rgba(247, 37, 133, 0.1); border-left-color: #f72585;">
+        <h3 style="color: #f72585;">🎯 Next Steps</h3>
+        <ol>
+            <li><strong style="color: #ff9ff3;">Jangan lupa buka <code>audio_test_generator.html</code></strong> untuk setup audio</li>
+            <li>Generate atau download file audio <code>sound_correct.wav</code> & <code>sound_wrong.wav</code></li>
+            <li>Letakkan kedua file audio di folder <code>/Users/dkaa/</code></li>
+            <li>Buka <code>crystal_ball_game.html</code> di browser</li>
+            <li>Klik bola ramalan dan mulai bermain! 🎮</li>
+        </ol>
+    </div>
+    
+    <!-- FILE STRUCTURE -->
+    <div class="category">
+        <h2 class="category-title">📂 Struktur Folder</h2>
+        <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 10px; font-family: monospace; font-size: 0.9em; overflow-x: auto;">
+            <div>/Users/dkaa/</div>
+            <div style="margin-left: 20px;">
+                <div>├── <span style="color: #4cc9f0;">crystal_ball_game.html</span> ← Game</div>
+                <div>├── <span style="color: #4cc9f0;">audio_test_generator.html</span> ← Audio Setup Tool</div>
+                <div>├── <span style="color: #2ec4b6;">sound_correct.wav</span> ← Audio untuk jawaban benar</div>
+                <div>├── <span style="color: #2ec4b6;">sound_wrong.wav</span> ← Audio untuk jawaban salah</div>
+                <div>├── README.md ← Dokumentasi lengkap</div>
+                <div>├── SETUP_SUMMARY.txt ← Quick reference</div>
+                <div>├── AUDIO_SETUP.txt ← Panduan audio</div>
+                <div>├── AUDIO_FLOW_DIAGRAM.txt ← Flow charts</div>
+                <div>├── generate_audio.js ← Python script reference</div>
+                <div>└── index.html ← File ini (navigasi)</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- FEATURES -->
+    <div class="category">
+        <h2 class="category-title">✨ Fitur Utama Game</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+            <div style="background: rgba(76, 201, 240, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #4cc9f0;">
+                <h4 style="color: #4cc9f0; margin-top: 0;">🎯 Sistem Pertanyaan</h4>
+                <p style="font-size: 0.9em; margin: 0;">17 pertanyaan tentang protein & olahraga. Dipilih secara random setiap kali main.</p>
+            </div>
+            
+            <div style="background: rgba(76, 201, 240, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #4cc9f0;">
+                <h4 style="color: #4cc9f0; margin-top: 0;">⏱️ Timer 5 Detik</h4>
+                <p style="font-size: 0.9em; margin: 0;">Setiap pertanyaan memiliki waktu menjawab 5 detik dengan progress bar visual.</p>
+            </div>
+            
+            <div style="background: rgba(46, 196, 182, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #2ec4b6;">
+                <h4 style="color: #2ec4b6; margin-top: 0;">🔊 Audio Feedback</h4>
+                <p style="font-size: 0.9em; margin: 0;">Suara feedback saat jawaban benar (tinggi) dan salah (rendah).</p>
+            </div>
+            
+            <div style="background: rgba(46, 196, 182, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #2ec4b6;">
+                <h4 style="color: #2ec4b6; margin-top: 0;">📊 Score Tracking</h4>
+                <p style="font-size: 0.9em; margin: 0;">Track real-time jumlah jawaban benar dan salah selama bermain.</p>
+            </div>
+            
+            <div style="background: rgba(247, 37, 133, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #f72585;">
+                <h4 style="color: #f72585; margin-top: 0;">🎮 Interaktif</h4>
+                <p style="font-size: 0.9em; margin: 0;">Klik bola ramalan untuk pertanyaan baru, klik opsi untuk menjawab.</p>
+            </div>
+            
+            <div style="background: rgba(247, 37, 133, 0.1); padding: 15px; border-radius: 8px; border-left: 3px solid #f72585;">
+                <h4 style="color: #f72585; margin-top: 0;">🎨 Beautiful UI</h4>
+                <p style="font-size: 0.9em; margin: 0;">Dark theme futuristik dengan animasi smooth dan visual feedback yang jelas.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- INFO BOX -->
+    <div style="background: rgba(255, 165, 0, 0.1); border: 1px solid rgba(255, 165, 0, 0.3); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+        <p style="margin: 0; color: #ffa500;">
+            <strong>💡 Tip:</strong> Jika Anda baru pertama kali setup, mulai dari 
+            <a href="audio_test_generator.html" style="color: #4cc9f0;">audio_test_generator.html</a> 
+            untuk setup audio dengan mudah!
+        </p>
+    </div>
+    
+    <div class="footer">
+        <p>Game Kuis Bola Ramalan v1.1</p>
+        <p>Dengan Audio Effects Support • January 19, 2026</p>
+    </div>
+</div>
+
+</body>
+</html>
